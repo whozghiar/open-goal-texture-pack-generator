@@ -1,0 +1,17 @@
+# Python / PyInstaller
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+build/
+dist/
+*.spec
+*.log
+
+# Generated Exe
+texture_pack_generator.exe
+
+# Temporary files
+.cache/
+temp/
+staging/
