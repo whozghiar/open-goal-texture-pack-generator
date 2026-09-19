@@ -1,0 +1,71 @@
+name: Release Desktop App
+
+on:
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch:
+    inputs:
+      tag_name:
+        description: 'Release tag name (e.g. v1.0.0)'
+        required: false
+        default: 'v1.0.0'
+
+permissions:
+  contents: write
+
+jobs:
+  build-windows:
+    name: Build & Release (Windows x86-64)
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: 'npm'
+
+      - name: Setup Rust stable
+        uses: dtolnay/rust-toolchain@stable
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build Tauri standalone binary
+        run: npx tauri build --no-bundle
+
+      - name: Prepare release assets
+        shell: bash
+        run: |
+          mkdir -p release-out
+          cp src-tauri/target/release/open-goal-texture-pack-generator.exe release-out/texture_pack_generator.exe
+          cd release-out
+          sha256sum texture_pack_generator.exe > SHA256SUMS.txt
+
+      - name: Determine tag name
+        id: tag
+        shell: bash
+        run: |
+          if [ -n "${{ github.event.inputs.tag_name }}" ]; then
+            echo "tag=${{ github.event.inputs.tag_name }}" >> $GITHUB_OUTPUT
+          elif [[ "${{ github.ref }}" == refs/tags/* ]]; then
+            echo "tag=${GITHUB_REF#refs/tags/}" >> $GITHUB_OUTPUT
+          else
+            echo "tag=v1.0.0" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Publish GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ steps.tag.outputs.tag }}
+          name: "OpenGOAL Texture Pack Generator ${{ steps.tag.outputs.tag }}"
+          files: |
+            release-out/texture_pack_generator.exe
+            release-out/SHA256SUMS.txt
+          draft: false
+          prerelease: false
+          generate_release_notes: true

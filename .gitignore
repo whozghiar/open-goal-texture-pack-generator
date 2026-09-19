@@ -12,5 +12,5 @@ vite.config.ts.timestamp-*
 # Rust / Tauri
 src-tauri/target/
 *.exe
-!texture_pack_generator.exe
 *.pdb
+release-out/
