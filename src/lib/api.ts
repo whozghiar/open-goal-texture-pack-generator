@@ -112,9 +112,16 @@ export const api = {
   },
 
   async exportZip(defaultFilename: string): Promise<ExportResult | null> {
+    let resolvedDefaultPath = defaultFilename;
+    try {
+      resolvedDefaultPath = await invoke<string>("get_default_export_path", { filename: defaultFilename });
+    } catch {
+      // fallback to relative defaultFilename if backend call fails
+    }
+
     const dest = await save({
       title: "Enregistrer l'archive du pack (.zip)",
-      defaultPath: defaultFilename,
+      defaultPath: resolvedDefaultPath,
       filters: [
         {
           name: "Archive ZIP",

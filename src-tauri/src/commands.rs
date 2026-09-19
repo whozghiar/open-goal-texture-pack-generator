@@ -205,6 +205,15 @@ pub fn get_texture_data_url(state: State<Mutex<AppState>>, id: String) -> Result
 }
 
 #[tauri::command]
+pub fn get_default_export_path(state: State<Mutex<AppState>>, filename: String) -> Result<String, String> {
+    let lock = state.lock().map_err(|e| e.to_string())?;
+    let target_dir = lock.project_root.join("docs").join("modding").join("current_mod").join("texture_packs");
+    let _ = std::fs::create_dir_all(&target_dir);
+    let full_path = target_dir.join(filename);
+    Ok(full_path.to_string_lossy().to_string())
+}
+
+#[tauri::command]
 pub fn export_zip(state: State<Mutex<AppState>>, dest_zip_path: String) -> Result<ExportResult, String> {
     let dest_path = PathBuf::from(&dest_zip_path);
     if let Some(parent) = dest_path.parent() {

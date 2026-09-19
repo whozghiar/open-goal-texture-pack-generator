@@ -30,6 +30,7 @@ pub fn run() {
             commands::remove_texture,
             commands::clear_textures,
             commands::get_texture_data_url,
+            commands::get_default_export_path,
             commands::export_zip,
             commands::install_local,
             commands::open_in_explorer,

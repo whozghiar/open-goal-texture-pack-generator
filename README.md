@@ -30,7 +30,7 @@ Built using the exact same technological stack as the official [OpenGOAL Launche
 - **Smart Cross-Level Detection:** Automatically cross-references incoming textures against OpenGOAL's retail database (`tex-info.min.json`). It flags textures shared across multiple levels with glowing amber badges, helping modders decide between global routing (`_all/`) or level-specific tpages.
 - **Visual Texture Grid & Zoom:** Displays real-time PNG previews with an alpha-channel checkerboard, dimensions, file size, SHA256 checksum, and destination folder selector.
 - **Cover Art & Metadata Editor:** Drag and drop cover artwork (`cover.png`) and define pack name, SemVer version, author, website, and descriptive tags.
-- **One-Click Package Export:** Generates an official launcher-compliant `.zip` archive containing:
+- **One-Click Package Export:** Generates an official launcher-compliant `.zip` archive pre-targeted to `docs/modding/current_mod/texture_packs/` (ready for automatic GitHub Release packaging):
   - `metadata.json` (OpenGOAL texture pack format v1)
   - `cover.png` (Aspect ratio normalized thumbnail)
   - `custom_assets/<game>/texture_replacements/<destination>/`
@@ -105,7 +105,7 @@ Développé selon la même pile technologique que le [Launcher officiel OpenGOAL
 - **Détection Intelligente Inter-Niveaux :** Indexe et compare instantanément les textures importées avec la base de données officielle du jeu (`tex-info.min.json`). Les textures partagées entre plusieurs niveaux sont surlignées par un badge ambre, aidant le moddeur à choisir entre routage universel (`_all/`) ou ciblage de niveau spécifique.
 - **Grille Visuelle & Zoom Haute Définition :** Aperçu en temps réel avec damier de transparence alpha, dimensions PNG, taille, empreinte SHA256 et sélecteur de dossier de destination.
 - **Éditeur de Métadonnées & Couverture :** Glisser-déposer d'image de couverture (`cover.png`) et configuration du nom, version SemVer, auteur, lien Web et tags descriptifs.
-- **Export en 1 Clic :** Génère une archive `.zip` strictement conforme aux spécifications du launcher OpenGOAL :
+- **Export en 1 Clic :** Génère une archive `.zip` ciblant par défaut `docs/modding/current_mod/texture_packs/` (prête pour la publication automatique en release GitHub) et conforme au Launcher OpenGOAL :
   - `metadata.json` (Format standard de pack de textures v1)
   - `cover.png` (Miniature normalisée)
   - `custom_assets/<game>/texture_replacements/<destination>/`
